@@ -1,0 +1,26 @@
+name: "NodeProp Config Generator"
+description: "Generates a nodeprop.config.yaml file with details about the current repository."
+inputs:
+  branch:
+    description: "The branch to retrieve information about"
+    required: true
+    default: "main"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+
+    - name: Install Dependencies
+      run: python -m pip install --upgrade pip
+    pip install .
+
+    - name: Run Configuration Generator
+      run: python generate_config.py
+
+outputs:
+  config_path:
+    description: "Path to the generated nodeprop.config.yaml file"
